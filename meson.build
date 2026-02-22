@@ -4,13 +4,14 @@ gl_dep = dependency('gl')
 glfw_dep = dependency('glfw3')
 
 glyph_src = [
-    'src/glyph.c'
+    'src/glyph.c',
+    'glad/src/glad.c',
 ]
 
 glyph = shared_library('glyph', 
   glyph_src,
   dependencies: [gl_dep, glfw_dep],
-  include_directories: include_directories('include'),
+  include_directories: include_directories('include', 'glad/include'),
   gnu_symbol_visibility: 'hidden',
 )
 

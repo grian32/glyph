@@ -4,5 +4,5 @@
     #define GLYPH_API __attribute__((visibility("default")))
 #endif
 
-GLYPH_API void printStuff();
+GLYPH_API void run();
 

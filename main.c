@@ -1,6 +1,6 @@
 #include "glyph.h" 
 
 int main() { 
-    printStuff();
+    run();
     return 0;
 }
