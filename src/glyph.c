@@ -20,10 +20,14 @@ void glyph_begin_frame() {
 }
 
 void glyph_end_frame() {
+    glNamedBufferSubData(g_ssbo, 0, g_quad_count * sizeof(QuadData), g_quads);
+
     glUseProgram(g_shader);
     glBindVertexArray(g_vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, g_quad_count);
     glfwSwapBuffers(g_window);
+
+    g_quad_count = 0;
 }
 
 int glyph_should_close() {

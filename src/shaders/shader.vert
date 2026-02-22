@@ -1,8 +1,21 @@
 #version 450 core
 
+struct QuadData {
+    mat4 model;
+    vec4 color;
+};
+
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec2 aUV;
+layout (std430, binding = 1) buffer Quads {
+    QuadData quads[];
+};
+
+flat out int v_quad_idx;
 
 void main() {
-    gl_Position = vec4(aPos, 1.0);
+    int quad_idx = gl_InstanceID;
+    v_quad_idx = quad_idx;
+    QuadData quad = quads[quad_idx];
+
+    gl_Position = quad.model * vec4(aPos, 1.0);
 }

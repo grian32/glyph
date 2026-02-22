@@ -1,23 +1,36 @@
+#include <string.h>
+
 #include "glyph_internal.h"
+#include "glyph.h"
 #include "shader_frag.h"
 #include "shader_vert.h"
 #include <glad/glad.h>
 
 float vertices[] = {
-    -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
- -0.5f, -0.5f,  0.0f, 0.0f, 0.0f,
-  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-  0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
+    -0.5f,  0.5f,  0.0f,
+    -0.5f, -0.5f,  0.0f,
+     0.5f, -0.5f,  0.0f,
+     0.5f,  0.5f,  0.0f,
 };
 
-unsigned int indices[] = {
-    0, 1, 2,
-    0, 2, 3
-};
+static unsigned int indices[MAX_QUADS * 6];
 
 GLuint g_vao, g_vbo, g_ebo, g_shader;
 
+QuadData g_quads[MAX_QUADS];
+int g_quad_count = 0;
+GLuint g_ssbo;
+
 void glyph_renderer_init() {
+    for (int i = 0; i < MAX_QUADS; i++) {
+        indices[i*6 + 0] = 0;
+        indices[i*6 + 1] = 1;
+        indices[i*6 + 2] = 2;
+        indices[i*6 + 3] = 0;
+        indices[i*6 + 4] = 2;
+        indices[i*6 + 5] = 3;
+    }
+
     glCreateVertexArrays(1, &g_vao);
     glCreateBuffers(1, &g_vbo);
     glCreateBuffers(1, &g_ebo);
@@ -25,16 +38,22 @@ void glyph_renderer_init() {
     glNamedBufferStorage(g_vbo, sizeof(vertices), vertices, GL_DYNAMIC_STORAGE_BIT);
     glNamedBufferStorage(g_ebo, sizeof(indices), indices, GL_DYNAMIC_STORAGE_BIT);
 
-    glVertexArrayVertexBuffer(g_vao, 0, g_vbo, 0, 5 * sizeof(float));
+    glVertexArrayVertexBuffer(g_vao, 0, g_vbo, 0, 3 * sizeof(float));
     glVertexArrayElementBuffer(g_vao, g_ebo);
 
     glVertexArrayAttribFormat(g_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
     glVertexArrayAttribBinding(g_vao, 0, 0);
     glEnableVertexArrayAttrib(g_vao, 0);
 
-    glVertexArrayAttribFormat(g_vao, 1, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
-    glVertexArrayAttribBinding(g_vao, 1, 0);
-    glEnableVertexArrayAttrib(g_vao, 1);
+    glCreateBuffers(1, &g_ssbo);
+    glNamedBufferStorage(g_ssbo, MAX_QUADS * sizeof(QuadData), NULL, GL_DYNAMIC_STORAGE_BIT);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, g_ssbo);
 
-    g_shader = glyph_compile_shader(vert_src, frag_src);
+    g_shader = glyph_compile_shader(vert_src, vert_src_len, frag_src, frag_src_len);
+}
+
+void glyph_draw_quad(const float model[16], const float color[4]) {
+    memcpy(g_quads[g_quad_count].model, model, sizeof(float) * 16);
+    memcpy(g_quads[g_quad_count].color, color, sizeof(float) * 4);
+    g_quad_count++;
 }

@@ -15,5 +15,9 @@ GLYPH_API void glyph_begin_frame();
 GLYPH_API void glyph_end_frame();
 GLYPH_API int glyph_should_close();
 GLYPH_API void glyph_terminate();
+// renderer.c
+GLYPH_API void glyph_draw_quad(const float model[16], const float color[4]);
 
-
+// math.c
+GLYPH_API void mat4_identity(float m[16]);
+GLYPH_API void mat4_translate(float m[16], float x, float y, float z);
