@@ -1,3 +1,4 @@
+#include <math.h>
 #include <string.h>
 
 #include "glyph_internal.h"
@@ -20,6 +21,10 @@ GLuint g_vao, g_vbo, g_ebo, g_shader;
 QuadData g_quads[MAX_QUADS];
 int g_quad_count = 0;
 GLuint g_ssbo;
+GLuint g_vp_loc;
+
+float g_proj[16];
+float g_view[16];
 
 void glyph_renderer_init() {
     for (int i = 0; i < MAX_QUADS; i++) {
@@ -30,6 +35,9 @@ void glyph_renderer_init() {
         indices[i*6 + 4] = 2;
         indices[i*6 + 5] = 3;
     }
+    mat4_perspective(g_proj, DEG2RAD(70.0f), (float)g_width / (float)g_height, 0.1f, 1000.0f);
+    float angle = DEG2RAD(10.0f);
+    mat4_look_at(g_view, 0, 0, 1, sinf(angle), 0, -cosf(angle));
 
     glCreateVertexArrays(1, &g_vao);
     glCreateBuffers(1, &g_vbo);
@@ -50,6 +58,7 @@ void glyph_renderer_init() {
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, g_ssbo);
 
     g_shader = glyph_compile_shader(vert_src, vert_src_len, frag_src, frag_src_len);
+    g_vp_loc = glGetUniformLocation(g_shader, "u_vp");
 }
 
 void glyph_draw_quad(const float model[16], const float color[4]) {

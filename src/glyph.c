@@ -13,7 +13,12 @@ void glyph_init() {
     glyph_renderer_init();
 }
 
+float g_vp[16];
+
 void glyph_begin_frame() {
+    mat4_zero(g_vp);
+    mat4_mul(g_vp, g_proj, g_view);
+
     glfwPollEvents();
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -23,6 +28,7 @@ void glyph_end_frame() {
     glNamedBufferSubData(g_ssbo, 0, g_quad_count * sizeof(QuadData), g_quads);
 
     glUseProgram(g_shader);
+    glUniformMatrix4fv(g_vp_loc, 1, GL_FALSE, g_vp);
     glBindVertexArray(g_vao);
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, g_quad_count);
     glfwSwapBuffers(g_window);

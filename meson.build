@@ -29,6 +29,7 @@ glyph = shared_library('glyph',
     vert_h,
     frag_h,
     dependencies: [gl_dep, glfw_dep],
+    link_args: ['-lm'],
     include_directories: include_directories('include', 'src', 'glad/include'),
     gnu_symbol_visibility: 'hidden',
 )

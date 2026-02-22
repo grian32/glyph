@@ -11,11 +11,12 @@ layout (std430, binding = 1) buffer Quads {
 };
 
 flat out int v_quad_idx;
+uniform mat4 u_vp;
 
 void main() {
     int quad_idx = gl_InstanceID;
     v_quad_idx = quad_idx;
     QuadData quad = quads[quad_idx];
 
-    gl_Position = quad.model * vec4(aPos, 1.0);
+    gl_Position = u_vp * quad.model * vec4(aPos, 1.0);
 }
