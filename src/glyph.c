@@ -3,37 +3,29 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
+#include "glyph_internal.h"
 
-void run() {
-    glfwInit();
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(800, 600, "glyph", NULL, NULL);
-    if (!window) {
-        printf("failed to create window\n");
-        glfwTerminate();
-        exit(1);
-    }
-
-    glfwMakeContextCurrent(window);
-
+void glyph_init() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("failed to load gl\n");
         exit(1);
     }
+}
 
+void glyph_begin_frame() {
+    glfwPollEvents();
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
 
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
+void glyph_end_frame() {
+    glfwSwapBuffers(g_window);
+}
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+int glyph_should_close() {
+    return glfwWindowShouldClose(g_window);
+}
 
-        glfwSwapBuffers(window);
-    }
-
+void glyph_terminate() {
     glfwTerminate();
 }
