@@ -10,6 +10,7 @@ void glyph_init() {
         printf("failed to load gl\n");
         exit(1);
     }
+    glyph_renderer_init();
 }
 
 void glyph_begin_frame() {
@@ -19,6 +20,9 @@ void glyph_begin_frame() {
 }
 
 void glyph_end_frame() {
+    glUseProgram(g_shader);
+    glBindVertexArray(g_vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glfwSwapBuffers(g_window);
 }
 
