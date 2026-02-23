@@ -6,7 +6,9 @@
 float g_ex, g_ey, g_ez, g_cx, g_cy, g_cz;
 
 void glyph_camera_set_pos(float x, float y, float z) {
-    g_ex = x, g_ey = y, g_ez = z;
+    g_ex = x;
+    g_ey = y;
+    g_ez = z;
 }
 
 void glyph_camera_look_at(float yaw, float pitch) {

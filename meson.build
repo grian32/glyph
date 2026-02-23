@@ -11,6 +11,7 @@ glyph_src = [
     'src/shaders.c',
     'src/math.c',
     'src/camera.c',
+    'src/input.c',
 ]
 
 vert_h = custom_target('shader_vert',
@@ -38,6 +39,7 @@ glyph = shared_library('glyph',
 executable('testglyph',
     'main.c',
     link_with: glyph,
+    link_args: ['-lm'],
     include_directories: include_directories('include'),
     dependencies: [gl_dep, glfw_dep]
 )

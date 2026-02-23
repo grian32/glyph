@@ -29,6 +29,10 @@ extern float g_view[16];
 extern GLuint g_vp_loc;
 
 extern float g_ex, g_ey, g_ez, g_cx, g_cy, g_cz;
+extern float g_last_x, g_last_y, g_dx, g_dy;
+
+extern int g_mouse_prev[8];
+extern int g_mouse_curr[8];
 
 void mat4_zero(float m[16]);
 void mat4_perspective(float m[16], float fov, float aspect, float near, float far);
