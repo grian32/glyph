@@ -17,6 +17,7 @@ float g_vp[16];
 
 void glyph_begin_frame() {
     mat4_zero(g_vp);
+    mat4_look_at(g_view, g_ex, g_ey, g_ez, g_cx, g_cy, g_cz);
     mat4_mul(g_vp, g_proj, g_view);
 
     glfwPollEvents();

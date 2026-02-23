@@ -16,6 +16,9 @@ int main() {
     while (!glyph_should_close()) {
         glyph_begin_frame();
 
+        glyph_camera_set_pos(0, 0, 2);
+        glyph_camera_look_at(5, 0);
+
         glyph_draw_quad(m1, color);
         glyph_draw_quad(m2, color);
 

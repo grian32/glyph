@@ -10,6 +10,7 @@ glyph_src = [
     'src/renderer.c',
     'src/shaders.c',
     'src/math.c',
+    'src/camera.c',
 ]
 
 vert_h = custom_target('shader_vert',

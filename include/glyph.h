@@ -21,3 +21,8 @@ GLYPH_API void glyph_draw_quad(const float model[16], const float color[4]);
 // math.c
 GLYPH_API void mat4_identity(float m[16]);
 GLYPH_API void mat4_translate(float m[16], float x, float y, float z);
+
+// camera.c
+GLYPH_API void glyph_camera_set_pos(float x, float y, float z);
+GLYPH_API void glyph_camera_look_at(float yaw, float pitch);
+

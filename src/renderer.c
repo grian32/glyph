@@ -36,8 +36,6 @@ void glyph_renderer_init() {
         indices[i*6 + 5] = 3;
     }
     mat4_perspective(g_proj, DEG2RAD(70.0f), (float)g_width / (float)g_height, 0.1f, 1000.0f);
-    float angle = DEG2RAD(10.0f);
-    mat4_look_at(g_view, 0, 0, 1, sinf(angle), 0, -cosf(angle));
 
     glCreateVertexArrays(1, &g_vao);
     glCreateBuffers(1, &g_vbo);

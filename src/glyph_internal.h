@@ -28,6 +28,8 @@ extern float g_proj[16];
 extern float g_view[16];
 extern GLuint g_vp_loc;
 
+extern float g_ex, g_ey, g_ez, g_cx, g_cy, g_cz;
+
 void mat4_zero(float m[16]);
 void mat4_perspective(float m[16], float fov, float aspect, float near, float far);
 void mat4_mul(float into[16], const float a[16], const float b[16]);
