@@ -1,8 +1,8 @@
 clean:
-	rm -rf builddir
-	mkdir builddir
-	meson setup builddir
+	rm -rf buildDir
+	mkdir buildDir
+	meson setup buildDir
 
 runtest:
-	meson compile -C builddir 
-	./builddir/testglyph
+	meson compile -C buildDir
+	./buildDir/testglyph
