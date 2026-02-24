@@ -17,6 +17,8 @@ extern GLuint g_vao, g_vbo, g_ebo, g_shader;
 typedef struct {
     float model[16];
     float color[4];
+    uint64_t texture;
+    uint64_t _pad; // i honestly dont understand why this padding is required as it should be 8-byte aligned, 20 floats + 1 uint64 = 88 bytes
 } QuadData;
 
 extern QuadData g_quads[MAX_QUADS];

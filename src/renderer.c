@@ -37,6 +37,9 @@ void glyph_renderer_init() {
     }
     mat4_perspective(g_proj, DEG2RAD(70.0f), (float)g_width / (float)g_height, 0.1f, 1000.0f);
 
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
     glCreateVertexArrays(1, &g_vao);
     glCreateBuffers(1, &g_vbo);
     glCreateBuffers(1, &g_ebo);
@@ -59,8 +62,9 @@ void glyph_renderer_init() {
     g_vp_loc = glGetUniformLocation(g_shader, "u_vp");
 }
 
-void glyph_draw_quad(const GlyphMat4 model, const GlyphRaw4 color) {
+void glyph_draw_quad(const GlyphMat4 model, const GlyphRaw4 color, const uint64_t texture) {
     memcpy(g_quads[g_quad_count].model, model, sizeof(float) * 16);
     memcpy(g_quads[g_quad_count].color, color, sizeof(float) * 4);
+    g_quads[g_quad_count].texture = texture;
     g_quad_count++;
 }

@@ -2,6 +2,7 @@ project('glyph', 'c', version: '0.0.1')
 
 gl_dep = dependency('gl')
 glfw_dep = dependency('glfw3')
+jxl_dep = dependency('libjxl')
 
 glyph_src = [
     'src/glyph.c',
@@ -12,6 +13,7 @@ glyph_src = [
     'src/math.c',
     'src/camera.c',
     'src/input.c',
+    'src/texture.c',
 ]
 
 vert_h = custom_target('shader_vert',
@@ -30,7 +32,7 @@ glyph = shared_library('glyph',
     glyph_src,
     vert_h,
     frag_h,
-    dependencies: [gl_dep, glfw_dep],
+    dependencies: [gl_dep, glfw_dep, jxl_dep],
     link_args: ['-lm'],
     include_directories: include_directories('include', 'src', 'glad/include'),
     gnu_symbol_visibility: 'hidden',

@@ -5,6 +5,7 @@
 #endif
 
 #include <stdint.h>
+#include <stddef.h>
 
 #define DEG2RAD(x) ((x) * (3.14159265358979323846 / 180.0f))
 
@@ -45,7 +46,7 @@ GLYPH_API void glyph_end_frame();
 GLYPH_API int glyph_should_close();
 GLYPH_API void glyph_terminate();
 // renderer.c
-GLYPH_API void glyph_draw_quad(const float model[16], const float color[4]);
+GLYPH_API void glyph_draw_quad(const float model[16], const float color[4], uint64_t texture);
 
 // math.c
 GLYPH_API void glyph_calc_forward(float yaw, float pitch, GlyphVec3* out);
@@ -66,6 +67,10 @@ GLYPH_API void glyph_mouse_delta(float *dx, float *dy);
 GLYPH_API void glyph_disable_cursor();
 GLYPH_API void glyph_enable_cursor();
 GLYPH_API int glyph_mouse_pressed(int button);
+
+// texture.c
+GLYPH_API uint64_t glyph_load_texture(const uint8_t* data, size_t size);
+GLYPH_API uint64_t glyph_load_texture_from_file(const char* jxl_path);
 
 #define GLYPH_KEY_UNKNOWN            (-1)
 #define GLYPH_KEY_SPACE              32
