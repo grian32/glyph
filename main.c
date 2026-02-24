@@ -72,9 +72,9 @@ int main() {
     GlyphMat4 m1;
     GlyphMat4 m2;
     GlyphMat4 m3;
-    const GlyphTransform t = { .pos = { 0.5f, -0.5f, 0.0f}, .rot = { 0, 0, -50 }, .scale = 0.5f};
+    const GlyphTransform t = { .pos = { 0.5f, -0.5f, 0.0f}, .rot = { -50, 0, 0}, .scale = 0.5f};
     const GlyphTransform t2 = { .pos = { 1, 0, 0 }, .rot = { 0, 0, 0 }, .scale = 1};
-    const GlyphTransform t3 = { .pos = { 1, -0.5f, -0.5f }, .rot = { 0, 0, -90}, .scale = 1};
+    const GlyphTransform t3 = { .pos = { 1, -0.5f, -0.5f }, .rot = { -90, 0, 0}, .scale = 1};
     glyph_apply_transform(m1, &t);
     glyph_apply_transform(m2, &t2);
     glyph_apply_transform(m3, &t3);
