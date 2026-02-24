@@ -1,8 +1,8 @@
 #include <math.h>
+#include <stdio.h>
 
 #include "glyph.h"
 
-float color[4] = {1.0f, 0.5f, 0.2f, 1.0f};
 float sensitivity = 0.07f;
 float speed = 0.01f;
 bool moveCam = true;
@@ -65,12 +65,19 @@ int main() {
     glyph_init();
     glyph_disable_cursor();
 
-    float m1[16];
-    float m2[16];
-    mat4_identity(m1);
-    mat4_identity(m2);
-    mat4_translate(m1, 0, 0, 0);
-    mat4_translate(m2, 1, 0, 0);
+    GlyphRaw4 color;
+    GlyphColor c = { .r = 191, .g = 189, .b = 45, .a = 255 };
+    glyph_apply_color(color, &c);
+
+    GlyphMat4 m1;
+    GlyphMat4 m2;
+    GlyphMat4 m3;
+    const GlyphTransform t = { .pos = { 0.5f, -0.5f, 0.0f}, .rot = { 0, 0, -50 }, .scale = 0.5f};
+    const GlyphTransform t2 = { .pos = { 1, 0, 0 }, .rot = { 0, 0, 0 }, .scale = 1};
+    const GlyphTransform t3 = { .pos = { 1, -0.5f, -0.5f }, .rot = { 0, 0, -90}, .scale = 1};
+    glyph_apply_transform(m1, &t);
+    glyph_apply_transform(m2, &t2);
+    glyph_apply_transform(m3, &t3);
     float x = 0, z = 2, y = 0, yaw = 0, pitch = 0;
 
     while (!glyph_should_close()) {
@@ -82,6 +89,7 @@ int main() {
 
         glyph_draw_quad(m1, color);
         glyph_draw_quad(m2, color);
+        glyph_draw_quad(m3, color);
 
         glyph_end_frame();
     }

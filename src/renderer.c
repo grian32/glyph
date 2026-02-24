@@ -59,7 +59,7 @@ void glyph_renderer_init() {
     g_vp_loc = glGetUniformLocation(g_shader, "u_vp");
 }
 
-void glyph_draw_quad(const float model[16], const float color[4]) {
+void glyph_draw_quad(const GlyphMat4 model, const GlyphRaw4 color) {
     memcpy(g_quads[g_quad_count].model, model, sizeof(float) * 16);
     memcpy(g_quads[g_quad_count].color, color, sizeof(float) * 4);
     g_quad_count++;

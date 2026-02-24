@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdio.h>
 #include <string.h>
 #include "glyph.h"
 
@@ -24,8 +25,47 @@ void mat4_identity(float m[16]) {
 
 void mat4_translate(float m[16], float x, float y, float z) {
     m[12] += m[0] * x + m[4] * y + m[8] * z;
-    m[13] += m[1] * x + m[5] * y + m[7] * z;
-    m[14] += m[2] * x + m[6] * y + m[9] * z;
+    m[13] += m[1] * x + m[5] * y + m[9] * z;
+    m[14] += m[2] * x + m[6] * y + m[10] * z;
+}
+
+void mat4_scale(float m[16], float s) {
+    m[0] *= s; m[1] *= s; m[2] *= s; m[3] *= s;
+    m[4] *= s; m[5] *= s; m[6] *= s; m[7] *= s;
+    m[8] *= s; m[9] *= s; m[10] *= s; m[11] *= s;
+}
+
+void mat4_rotate_x(float m[16], float angle) {
+    float s = sinf(angle);
+    float c = cosf(angle);
+    float t1, t2;
+
+    t1 = m[4];  t2 = m[8];  m[4]  = t1*c + t2*s;  m[8]  = -t1*s + t2*c;
+    t1 = m[5];  t2 = m[9];  m[5]  = t1*c + t2*s;  m[9]  = -t1*s + t2*c;
+    t1 = m[6];  t2 = m[10]; m[6]  = t1*c + t2*s;  m[10] = -t1*s + t2*c;
+    t1 = m[7];  t2 = m[11]; m[7]  = t1*c + t2*s;  m[11] = -t1*s + t2*c;
+}
+
+void mat4_rotate_y(float m[16], float angle) {
+    float s = sinf(angle);
+    float c = cosf(angle);
+    float t1, t2;
+
+    t1 = m[0];  t2 = m[8];  m[0]  = t1*c - t2*s;  m[8]  = t1*s + t2*c;
+    t1 = m[1];  t2 = m[9];  m[1]  = t1*c - t2*s;  m[9]  = t1*s + t2*c;
+    t1 = m[2];  t2 = m[10]; m[2]  = t1*c - t2*s;  m[10] = t1*s + t2*c;
+    t1 = m[3];  t2 = m[11]; m[3]  = t1*c - t2*s;  m[11] = t1*s + t2*c;
+}
+
+void mat4_rotate_z(float m[16], float angle) {
+    float s = sinf(angle);
+    float c = cosf(angle);
+    float t1, t2;
+
+    t1 = m[0];  t2 = m[4];  m[0]  = t1*c + t2*s;  m[4]  = -t1*s + t2*c;
+    t1 = m[1];  t2 = m[5];  m[1]  = t1*c + t2*s;  m[5]  = -t1*s + t2*c;
+    t1 = m[2];  t2 = m[6];  m[2]  = t1*c + t2*s;  m[6]  = -t1*s + t2*c;
+    t1 = m[3];  t2 = m[7];  m[3]  = t1*c + t2*s;  m[7]  = -t1*s + t2*c;
 }
 
 void mat4_perspective(float m[16], float fov, float aspect, float near, float far) {
@@ -76,6 +116,26 @@ void mat4_mul(float into[16], const float a[16], const float b[16]) {
     }
 
     memcpy(into, tmp, sizeof(float) * 16);
+}
+
+void glyph_apply_transform(GlyphMat4 mat, const GlyphTransform* t) {
+    mat4_identity(mat);
+    glyph_apply_stransform(mat, t);
+}
+void glyph_apply_stransform(GlyphMat4 mat, const GlyphTransform* t) {
+    mat4_scale(mat, t->scale);
+    // makes no sense imo how it applies rotations, just swapping them out
+    mat4_rotate_z(mat, DEG2RAD(t->rot[0]));
+    mat4_rotate_y(mat, DEG2RAD(t->rot[1]));
+    mat4_rotate_x(mat, DEG2RAD(t->rot[2]));
+    mat4_translate(mat, t->pos[0], t->pos[1], t->pos[2]);
+}
+
+void glyph_apply_color(GlyphRaw4 out, const GlyphColor* c) {
+    out[0] = (float)c->r / 255.0f;
+    out[1] = (float)c->g / 255.0f;
+    out[2] = (float)c->b / 255.0f;
+    out[3] = (float)c->a / 255.0f;
 }
 
 void glyph_calc_forward(float yaw, float pitch, GlyphVec3* out) {

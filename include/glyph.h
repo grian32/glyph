@@ -19,6 +19,22 @@ typedef struct {
     float z;
 } GlyphVec3;
 
+typedef float GlyphMat4[16];
+typedef float GlyphRaw4[4];
+
+typedef struct {
+    float pos[3];
+    float rot[3];
+    float scale;
+} GlyphTransform;
+
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+    uint8_t a;
+} GlyphColor;
+
 // window.c
 GLYPH_API void glyph_window_init(uint32_t width, uint32_t height, const char* name);
 
@@ -32,10 +48,13 @@ GLYPH_API void glyph_terminate();
 GLYPH_API void glyph_draw_quad(const float model[16], const float color[4]);
 
 // math.c
-GLYPH_API void mat4_identity(float m[16]);
-GLYPH_API void mat4_translate(float m[16], float x, float y, float z);
 GLYPH_API void glyph_calc_forward(float yaw, float pitch, GlyphVec3* out);
 GLYPH_API void glyph_calc_right(float yaw, GlyphVec3* out);
+// overrides mat with identity
+GLYPH_API void glyph_apply_transform(GlyphMat4 mat, const GlyphTransform* t);
+// does not overide mat with identity allowing for sequential transforms
+GLYPH_API void glyph_apply_stransform(GlyphMat4 mat, const GlyphTransform* t);
+GLYPH_API void glyph_apply_color(GlyphRaw4 out, const GlyphColor* c);
 
 // camera.c
 GLYPH_API void glyph_camera_set_pos(float x, float y, float z);
