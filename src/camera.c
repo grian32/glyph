@@ -11,7 +11,7 @@ void glyph_camera_set_pos(float x, float y, float z) {
     g_ez = z;
 }
 
-void glyph_camera_look_at(float yaw, float pitch) {
+void glyph_camera_set_rot(float yaw, float pitch) {
     float yaw_rad = DEG2RAD(yaw), pitch_rad = DEG2RAD(pitch);
 
     g_cx = g_ex + cosf(pitch_rad) * sinf(yaw_rad);

@@ -77,7 +77,7 @@ int main() {
         input(&x, &y, &z, &yaw, &pitch);
         glyph_begin_frame();
 
-        glyph_camera_look_at(yaw, pitch);
+        glyph_camera_set_rot(yaw, pitch);
         glyph_camera_set_pos(x, y, z);
 
         glyph_draw_quad(m1, color);

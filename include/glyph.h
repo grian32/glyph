@@ -39,7 +39,7 @@ GLYPH_API void glyph_calc_right(float yaw, GlyphVec3* out);
 
 // camera.c
 GLYPH_API void glyph_camera_set_pos(float x, float y, float z);
-GLYPH_API void glyph_camera_look_at(float yaw, float pitch);
+GLYPH_API void glyph_camera_set_rot(float yaw, float pitch);
 
 // input.c
 GLYPH_API int glyph_key_held(int key);
