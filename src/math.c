@@ -123,12 +123,11 @@ void glyph_apply_transform(GlyphMat4 mat, const GlyphTransform* t) {
     glyph_apply_stransform(mat, t);
 }
 void glyph_apply_stransform(GlyphMat4 mat, const GlyphTransform* t) {
-    mat4_scale(mat, t->scale);
-    // makes no sense imo how it applies rotations, just swapping them out
+    mat4_translate(mat, t->pos[0], t->pos[1], t->pos[2]);
     mat4_rotate_x(mat, DEG2RAD(t->rot[0]));
     mat4_rotate_y(mat, DEG2RAD(t->rot[1]));
     mat4_rotate_z(mat, DEG2RAD(t->rot[2]));
-    mat4_translate(mat, t->pos[0], t->pos[1], t->pos[2]);
+    mat4_scale(mat, t->scale);
 }
 
 void glyph_apply_color(GlyphRaw4 out, const GlyphColor* c) {

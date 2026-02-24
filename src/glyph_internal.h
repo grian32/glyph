@@ -4,7 +4,6 @@
 #include <GLFW/glfw3.h>
 
 #define MAX_QUADS 10000
-#define DEG2RAD(x) ((x) * (3.14159265358979323846 / 180.0f))
 
 extern GLFWwindow* g_window;
 extern uint32_t g_width, g_height;
