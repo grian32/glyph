@@ -77,3 +77,17 @@ void mat4_mul(float into[16], const float a[16], const float b[16]) {
 
     memcpy(into, tmp, sizeof(float) * 16);
 }
+
+void glyph_calc_forward(float yaw, float pitch, GlyphVec3* out) {
+    float yaw_rad = DEG2RAD(yaw), pitch_rad = DEG2RAD(pitch);
+    out->x = cosf(pitch_rad) * sinf(yaw_rad);
+    out->y = sinf(pitch_rad);
+    out->z = cosf(pitch_rad) * -cosf(yaw_rad);
+}
+
+void glyph_calc_right(float yaw, GlyphVec3* out) {
+    float yaw_rad = DEG2RAD(yaw);
+    out->y = 0.0f;
+    out->x = cosf(yaw_rad);
+    out->z = sinf(yaw_rad);
+}

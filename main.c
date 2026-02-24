@@ -22,37 +22,26 @@ void input(float* x, float* y, float* z, float* yaw, float* pitch) {
         }
     }
 
-    float yaw_rad = DEG2RAD(*yaw);
-    float pitch_rad = DEG2RAD(*pitch);
-
-    // TODO: add some api level helpers here? not sure how worth it tbh.. maybe make forward/rigth return vec3/vec2 and then its easy for the user to multiply
-    // abstracting beyond that seems unnecessary, if theyre doing game dev they should know how this basic part of a camera works
-    float forward[3] = {
-        cosf(pitch_rad) * sinf(yaw_rad),
-        sinf(pitch_rad),
-        cosf(pitch_rad) * -cosf(yaw_rad),
-    };
-
-    float right[2] = {
-        cosf(yaw_rad),
-        sinf(yaw_rad),
-    };
+    GlyphVec3 forward;
+    GlyphVec3 right;
+    glyph_calc_forward(*yaw, *pitch, &forward);
+    glyph_calc_right(*yaw, &right);
 
     if (glyph_key_held(GLYPH_KEY_D)) {
-        *x += right[0] * speed;
-        *z += right[1] * speed;
+        *x += right.x * speed;
+        *z += right.z * speed;
     }
     if (glyph_key_held(GLYPH_KEY_A)) {
-        *x -= right[0] * speed;
-        *z -= right[1] * speed;
+        *x -= right.x * speed;
+        *z -= right.z * speed;
     }
     if (glyph_key_held(GLYPH_KEY_W)) {
-        *x += forward[0] * speed;
-        *z += forward[2] * speed;
+        *x += forward.x * speed;
+        *z += forward.z * speed;
     }
     if (glyph_key_held(GLYPH_KEY_S)) {
-        *x -= forward[0] * speed;
-        *z -= forward[2] * speed;
+        *x -= forward.x * speed;
+        *z -= forward.z * speed;
     }
     if (glyph_key_held(GLYPH_KEY_LEFT_SHIFT)) {
         *y -= speed;
