@@ -48,7 +48,7 @@ void glyph_end_frame() {
     glUseProgram(g_shader);
     glUniformMatrix4fv(g_vp_loc, 1, GL_FALSE, g_vp);
     glBindVertexArray(g_vao);
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, g_quad_count);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, g_quad_count);
     glfwSwapBuffers(g_window);
 
     g_quad_count = 0;

@@ -11,8 +11,7 @@ extern uint32_t g_width, g_height;
 void glyph_renderer_init();
 GLuint glyph_compile_shader(unsigned char vert_src[], unsigned int vert_len, unsigned char frag_src[], unsigned int frag_len);
 
-extern float vertices[];
-extern GLuint g_vao, g_vbo, g_ebo, g_shader;
+extern GLuint g_vao, g_shader;
 
 typedef struct {
     float model[16];

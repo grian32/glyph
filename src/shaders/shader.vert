@@ -7,13 +7,14 @@ struct QuadData {
     sampler2D texture;
 };
 
-layout (location = 0) in vec3 aPos;
-layout (std430, binding = 1) buffer Quads {
+layout (std430, binding = 0) buffer Quads {
     QuadData quads[];
 };
 
 flat out int v_quad_idx;
 uniform mat4 u_vp;
+
+out vec2 v_uv;
 
 const vec2 uvs[4] = vec2[4](
     vec2(0.0, 0.0),
@@ -21,13 +22,22 @@ const vec2 uvs[4] = vec2[4](
     vec2(1.0, 1.0),
     vec2(1.0, 0.0)
 );
-out vec2 v_uv;
+
+const vec3 aPos[4] = vec3[4](
+     vec3(-0.5f,  0.5f, 0.0f),
+     vec3(-0.5f, -0.5f, 0.0f),
+     vec3( 0.5f, -0.5f, 0.0f),
+     vec3( 0.5f,  0.5f, 0.0f)
+);
+int indices[6] = {0, 1, 2, 0, 2, 3};
+
 
 void main() {
     int quad_idx = gl_InstanceID;
     v_quad_idx = quad_idx;
     QuadData quad = quads[quad_idx];
-    v_uv = uvs[gl_VertexID % 4];
+    const int idx = indices[gl_VertexID % 6];
+    v_uv = uvs[idx];
 
-    gl_Position = u_vp * quad.model * vec4(aPos, 1.0);
+    gl_Position = u_vp * quad.model * vec4(aPos[idx], 1.0);
 }
