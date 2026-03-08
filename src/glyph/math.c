@@ -118,6 +118,18 @@ void mat4_mul(float into[16], const float a[16], const float b[16]) {
     memcpy(into, tmp, sizeof(float) * 16);
 }
 
+// usage, mat, 0, width, height, 0, -1, 1
+void mat4_ortho(float m[16], float left, float right, float bottom, float top, float near, float far) {
+    mat4_identity(m);
+    m[0] = 2.0f / (right - left);
+    m[5] = 2.0f / (top - bottom);
+    m[10] = -2.0f / (far - near);
+    m[12] = -(right + left) / (right - left);
+    m[13] = -(top + bottom) / (top - bottom);
+    m[14] = -(far + near) / (far - near);
+    m[15] = 1.0f;
+}
+
 void glyph_apply_transform(GlyphMat4 mat, const GlyphTransform* t) {
     mat4_identity(mat);
     glyph_apply_stransform(mat, t);
@@ -149,4 +161,11 @@ void glyph_calc_right(float yaw, GlyphVec3* out) {
     out->y = 0.0f;
     out->x = cosf(yaw_rad);
     out->z = sinf(yaw_rad);
+}
+
+void glyph_apply_ui_rect_transform(GlyphRaw4 out, const GlyphUIRectTransform* u) {
+    out[0] = u->x;
+    out[1] = u->y;
+    out[2] = u->w;
+    out[3] = u->h;
 }

@@ -30,6 +30,13 @@ typedef struct {
 } GlyphTransform;
 
 typedef struct {
+    float x;
+    float y;
+    float w;
+    float h;
+} GlyphUIRectTransform;
+
+typedef struct {
     uint8_t r;
     uint8_t g;
     uint8_t b;
@@ -56,6 +63,7 @@ GLYPH_API void glyph_apply_transform(GlyphMat4 mat, const GlyphTransform* t);
 // does not overide mat with identity allowing for sequential transforms
 GLYPH_API void glyph_apply_stransform(GlyphMat4 mat, const GlyphTransform* t);
 GLYPH_API void glyph_apply_color(GlyphRaw4 out, const GlyphColor* c);
+GLYPH_API void glyph_apply_ui_rect_transform(GlyphRaw4 out, const GlyphUIRectTransform* u);
 
 // camera.c
 GLYPH_API void glyph_camera_set_pos(float x, float y, float z);
@@ -71,6 +79,10 @@ GLYPH_API int glyph_mouse_pressed(int button);
 // texture.c
 GLYPH_API uint64_t glyph_load_texture(const uint8_t* data, size_t size);
 GLYPH_API uint64_t glyph_load_texture_from_file(const char* jxl_path);
+
+// ui.c
+GLYPH_API void glyph_ui_init();
+GLYPH_API void glyph_ui_draw_quad(float rect[4], float color[4], uint64_t texture);
 
 #define GLYPH_KEY_UNKNOWN            (-1)
 #define GLYPH_KEY_SPACE              32

@@ -81,6 +81,14 @@ int main() {
 
     uint64_t stone_wall_tex = glyph_load_texture_from_file("./stone_wall.jxl");
 
+    const GlyphUIRectTransform ut = { .x = 0, .y = 0, .w = 100, .h = 50 };
+    GlyphRaw4 urect;
+    glyph_apply_ui_rect_transform(urect, &ut);
+
+    GlyphRaw4 yellow;
+    GlyphColor yellowColor = {.r = 255, .g = 255, .b = 0, .a = 255};
+    glyph_apply_color(yellow, &yellowColor);
+
     while (!glyph_should_close()) {
         input(&x, &y, &z, &yaw, &pitch);
         glyph_begin_frame();
@@ -91,6 +99,7 @@ int main() {
         glyph_draw_quad(m1, color, stone_wall_tex);
         glyph_draw_quad(m2, color, stone_wall_tex);
         glyph_draw_quad(m3, color, stone_wall_tex);
+        glyph_ui_draw_quad(urect, yellow, 0);
 
         glyph_end_frame();
     }

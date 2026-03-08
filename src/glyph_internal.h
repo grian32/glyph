@@ -20,6 +20,13 @@ typedef struct {
     uint64_t _pad; // i honestly dont understand why this padding is required as it should be 8-byte aligned, 20 floats + 1 uint64 = 88 bytes
 } QuadData;
 
+typedef struct {
+    float rect[4];
+    float color[4];
+    uint64_t texture;
+    uint64_t _pad;
+} UIQuadData;
+
 extern QuadData g_quads[MAX_QUADS];
 extern int g_quad_count;
 extern GLuint g_ssbo;
@@ -34,9 +41,19 @@ extern float g_last_x, g_last_y, g_dx, g_dy;
 extern int g_mouse_prev[8];
 extern int g_mouse_curr[8];
 
+extern bool g_ui_init;
+extern GLuint g_ui_vao, g_ui_shader_, g_ui_ssbo, g_ui_proj_loc;
+extern float g_ui_proj[16];
+extern UIQuadData g_ui_quads[MAX_QUADS];
+extern int g_ui_quad_count;
+
 void mat4_zero(float m[16]);
 void mat4_perspective(float m[16], float fov, float aspect, float near, float far);
 void mat4_mul(float into[16], const float a[16], const float b[16]);
+void mat4_ortho(float m[16], float left, float right, float bottom, float top, float near, float far);
 void mat4_look_at(float m[16], float ex, float ey, float ez, float cx, float cy, float cz);
+
+// ui
+void glyph_ui_flush();
 
 #endif

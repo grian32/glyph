@@ -49,9 +49,13 @@ void glyph_end_frame() {
     glUniformMatrix4fv(g_vp_loc, 1, GL_FALSE, g_vp);
     glBindVertexArray(g_vao);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, g_quad_count);
-    glfwSwapBuffers(g_window);
 
     g_quad_count = 0;
+    if (g_ui_init) {
+        glyph_ui_flush();
+    }
+
+    glfwSwapBuffers(g_window);
 }
 
 int glyph_should_close() {
