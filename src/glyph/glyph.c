@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
-#include "glyph_internal.h"
+#include "../glyph_internal.h"
 
 float g_last_x = 0, g_last_y = 0, g_dx = 0, g_dy = 0;
 

@@ -1,7 +1,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "glyph_internal.h"
+#include "../glyph_internal.h"
 #include "glyph.h"
 #include "shader_frag.h"
 #include "shader_vert.h"

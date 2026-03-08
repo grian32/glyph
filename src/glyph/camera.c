@@ -1,7 +1,7 @@
 #include <math.h>
 
 #include "glyph.h"
-#include "glyph_internal.h"
+#include "../glyph_internal.h"
 
 float g_ex, g_ey, g_ez, g_cx, g_cy, g_cz;
 

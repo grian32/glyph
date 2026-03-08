@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "glyph_internal.h"
+#include "../glyph_internal.h"
 #include <glad/glad.h>
 
 void checkShaderError(GLuint shader, bool vert) {

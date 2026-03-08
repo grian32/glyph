@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "glyph_internal.h"
+#include "../glyph_internal.h"
 #include "glyph.h"
 
 GLFWwindow* g_window;

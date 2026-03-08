@@ -1,5 +1,5 @@
 #include "glyph.h"
-#include "glyph_internal.h"
+#include "../glyph_internal.h"
 
 int glyph_key_held(int key) {
     return glfwGetKey(g_window, key) == GLFW_PRESS;
