@@ -5,25 +5,25 @@ glfw_dep = dependency('glfw3')
 jxl_dep = dependency('libjxl')
 
 glyph_src = [
-    'src/glyph.c',
+    'src/glyph/glyph.c',
     'glad/src/glad.c',
-    'src/window.c',
-    'src/renderer.c',
-    'src/shaders.c',
-    'src/math.c',
-    'src/camera.c',
-    'src/input.c',
-    'src/texture.c',
+    'src/glyph/window.c',
+    'src/glyph/renderer.c',
+    'src/glyph/shaders.c',
+    'src/glyph/math.c',
+    'src/glyph/camera.c',
+    'src/glyph/input.c',
+    'src/glyph/texture.c',
 ]
 
 vert_h = custom_target('shader_vert',
-    input: 'src/shaders/shader.vert',
+    input: 'src/glyph/shaders/shader.vert',
     output: 'shader_vert.h',
     command: ['xxd', '-i', '-n', 'vert_src', '@INPUT@', '@OUTPUT@'],
 )
 
 frag_h = custom_target('shader_frag',
-    input: 'src/shaders/shader.frag',
+    input: 'src/glyph/shaders/shader.frag',
     output: 'shader_frag.h',
     command: ['xxd', '-i', '-n', 'frag_src', '@INPUT@', '@OUTPUT@'],
 )
