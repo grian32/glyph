@@ -14,6 +14,7 @@ glyph_src = [
     'src/glyph/camera.c',
     'src/glyph/input.c',
     'src/glyph/texture.c',
+    'src/ui/ui.c',
 ]
 
 vert_h = custom_target('shader_vert',
@@ -28,10 +29,24 @@ frag_h = custom_target('shader_frag',
     command: ['xxd', '-i', '-n', 'frag_src', '@INPUT@', '@OUTPUT@'],
 )
 
+ui_vert_h = custom_target('ui_shader_vert',
+    input: 'src/ui/shaders/shader.vert',
+    output: 'ui_shader_vert.h',
+    command: ['xxd', '-i', '-n', 'ui_vert_src', '@INPUT@', '@OUTPUT@'],
+)
+
+ui_frag_h = custom_target('ui_shader_frag',
+    input: 'src/ui/shaders/shader.frag',
+    output: 'ui_shader_frag.h',
+    command: ['xxd', '-i', '-n', 'ui_frag_src', '@INPUT@', '@OUTPUT@'],
+)
+
 glyph = shared_library('glyph',
     glyph_src,
     vert_h,
     frag_h,
+    ui_vert_h,
+    ui_frag_h,
     dependencies: [gl_dep, glfw_dep, jxl_dep],
     link_args: ['-lm'],
     include_directories: include_directories('include', 'src', 'glad/include'),

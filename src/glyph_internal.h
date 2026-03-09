@@ -42,7 +42,7 @@ extern int g_mouse_prev[8];
 extern int g_mouse_curr[8];
 
 extern bool g_ui_init;
-extern GLuint g_ui_vao, g_ui_shader_, g_ui_ssbo, g_ui_proj_loc;
+extern GLuint g_ui_vao, g_ui_shader, g_ui_ssbo, g_ui_proj_loc;
 extern float g_ui_proj[16];
 extern UIQuadData g_ui_quads[MAX_QUADS];
 extern int g_ui_quad_count;
