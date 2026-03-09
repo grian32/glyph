@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include <glad/glad.h>
 
@@ -16,14 +17,13 @@ void glyph_ui_init() {
     g_ui_init = true;
     mat4_ortho(g_ui_proj, 0, (float)g_width, (float)g_height, 0, -1, 1);
 
-    g_ui_shader = glyph_compile_shader(ui_vert_src, ui_vert_src_len, ui_frag_src, ui_frag_src_len);
-
     glCreateVertexArrays(1, &g_ui_vao);
 
     glCreateBuffers(1, &g_ui_ssbo);
     glNamedBufferStorage(g_ui_ssbo, MAX_QUADS * sizeof(UIQuadData), NULL, GL_DYNAMIC_STORAGE_BIT);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, g_ssbo);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, g_ui_ssbo);
 
+    g_ui_shader = glyph_compile_shader(ui_vert_src, ui_vert_src_len, ui_frag_src, ui_frag_src_len);
     g_ui_proj_loc = glGetUniformLocation(g_ui_shader, "u_proj");
 }
 
@@ -34,6 +34,9 @@ void glyph_ui_draw_quad(float rect[4], float color[4], uint64_t texture) {
 }
 
 void glyph_ui_flush() {
+    if (!g_ui_init) {
+        printf("GLYPH::UI::Called without ui init\n");
+    }
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
 

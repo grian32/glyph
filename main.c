@@ -62,6 +62,7 @@ void input(float* x, float* y, float* z, float* yaw, float* pitch) {
 int main() {
     glyph_window_init(800, 600 , "glyph demo");
     glyph_init();
+    glyph_ui_init();
     glyph_disable_cursor();
 
     GlyphRaw4 color;

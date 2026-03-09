@@ -7,7 +7,7 @@ struct QuadData {
     sampler2D texture;
 };
 
-layout(std430, binding = 0) buffer Quads {
+layout(std430, binding = 1) buffer Quads {
     QuadData quads[];
 };
 
